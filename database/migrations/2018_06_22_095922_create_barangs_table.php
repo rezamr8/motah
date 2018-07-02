@@ -18,7 +18,7 @@ class CreateBarangsTable extends Migration
             $table->string('nama_barang')->nullable();
             $table->integer('jumlah')->nullable();
             $table->string('satuan')->nullable();
-            $table->double('harga')->nullable();
+           
             });
     }
 

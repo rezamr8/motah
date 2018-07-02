@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barang extends Model
+class StokMasuk extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'barangs';
+    protected $table = 'stok_masuks';
 
     /**
     * The database primary key value.
@@ -25,16 +25,7 @@ class Barang extends Model
      *
      * @var array
      */
-    protected $fillable = ['nama_barang', 'jumlah', 'satuan'];
+    protected $fillable = ['user_id', 'barang_id', 'tgl_beli', 'jumlah'];
 
-    public function stokkeluars()
-    {
-        return $this->hasMany('App\StokKeluar');
-    }
-
-    public function stokmasuks()
-    {
-        return $this->hasMany('App\StokMasuk');
-    }
     
 }

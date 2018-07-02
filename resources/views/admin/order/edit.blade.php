@@ -28,7 +28,29 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('admin.order.form', ['submitButtonText' => 'Update'])
+                       
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>ID</th><td>{{ $order->id }}</td>
+                                    </tr>
+                                    <tr><th> Jenis Order </th><td> {{ $order->no_order }} </td></tr><tr><th> Jumlah </th><td> <div class="form-group {{ $errors->has('jumlah') ? 'has-error' : ''}}">
+   
+    <div class="col-md-6">
+        {!! Form::number('jumlah', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+        {!! $errors->first('jumlah', '<p class="help-block">:message</p>') !!}
+    </div>
+</div> </td></tr><tr><th> Tgl Beres </th><td> {{ $order->tgl_beres }} </td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-4">
+                                {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
+                            </div>
+                        </div>
 
                         {!! Form::close() !!}
 

@@ -25,6 +25,13 @@
         {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('modal') ? 'has-error' : ''}}">
+    {!! Form::label('modal', 'Modal', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('modal', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+        {!! $errors->first('modal', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

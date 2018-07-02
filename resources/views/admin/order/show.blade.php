@@ -44,11 +44,27 @@
                                     <tr>
                                         <th>BARANG</th>
                                         <th>JUMLAH</th>
+                                        <th>AKSI</th>
                                     </tr>
                                     @foreach($order->transaksi as $o)
                                     <tr>
                                         <td>{{$o->barang->nama_barang}}</td>
                                         <td>{{$o->jumlah}}</td>
+                                        <td>
+                                        {!! Form::open([
+                                            'method'=>'DELETE',
+                                            'url' => ['admin/order',$o->order_id, 'transaksi', $o->barang_id],
+                                            'style' => 'display:inline'
+                                        ]) !!}
+                                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'Delete Barang',
+                                                    'onclick'=>'return confirm("Confirm delete?")'
+                                            ))!!}
+                                        {!! Form::close() !!}
+                                        
+                                        </td>
                                     </tr>
                                     @endforeach
                                     
@@ -79,10 +95,12 @@
                                                 </td>
                                                 <th>{!! Form::label('jumlah', 'JUMLAH') !!}</th>
                                                 <td>{!! Form::text('jumlah[]', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}</td>
+                                                <th>{!! Form::label('harga', 'HARGA') !!}</th>
+                                                <td>{!! Form::text('harga[]', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}</td>
                                                 <td> 
-                                                    <button class="btn btn-success btn-add inline btn-sm" type="button">
+                                                    <!-- <button class="btn btn-success btn-add inline btn-sm" type="button">
                                                         <span class="fa fa-plus"></span>
-                                                    </button>
+                                                    </button> -->
                                             </td>
                                             </tr>
                                         </tbody>

@@ -18,6 +18,7 @@ class CreateTransaksisTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('order_id')->nullable();
             $table->integer('barang_id')->nullable();
+            $table->double('harga')->nullable();
             $table->integer('jumlah')->nullable();
             });
     }

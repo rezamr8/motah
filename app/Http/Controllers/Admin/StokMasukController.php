@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Barang;
+use App\StokMasuk;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class StokMasukController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,16 +21,16 @@ class BarangController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $barang = Barang::where('nama_barang', 'LIKE', "%$keyword%")
+            $stokmasuk = StokMasuk::where('user_id', 'LIKE', "%$keyword%")
+                ->orWhere('barang_id', 'LIKE', "%$keyword%")
+                ->orWhere('tgl_beli', 'LIKE', "%$keyword%")
                 ->orWhere('jumlah', 'LIKE', "%$keyword%")
-                ->orWhere('satuan', 'LIKE', "%$keyword%")
-                ->orWhere('harga', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
-            $barang = Barang::paginate($perPage);
+            $stokmasuk = StokMasuk::paginate($perPage);
         }
 
-        return view('admin.barang.index', compact('barang'));
+        return view('admin.stok-masuk.index', compact('stokmasuk'));
     }
 
     /**
@@ -40,7 +40,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        return view('admin.barang.create');
+        return view('admin.stok-masuk.create');
     }
 
     /**
@@ -53,14 +53,16 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'nama_barang' => 'required',
+			'user_id' => 'required',
+			'barang_id' => 'required',
+			'tgl_beli' => 'required',
 			'jumlah' => 'required'
 		]);
         $requestData = $request->all();
         
-        Barang::create($requestData);
+        StokMasuk::create($requestData);
 
-        return redirect('admin/barang')->with('flash_message', 'Barang added!');
+        return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk added!');
     }
 
     /**
@@ -72,9 +74,9 @@ class BarangController extends Controller
      */
     public function show($id)
     {
-        $barang = Barang::findOrFail($id);
+        $stokmasuk = StokMasuk::findOrFail($id);
 
-        return view('admin.barang.show', compact('barang'));
+        return view('admin.stok-masuk.show', compact('stokmasuk'));
     }
 
     /**
@@ -86,9 +88,9 @@ class BarangController extends Controller
      */
     public function edit($id)
     {
-        $barang = Barang::findOrFail($id);
+        $stokmasuk = StokMasuk::findOrFail($id);
 
-        return view('admin.barang.edit', compact('barang'));
+        return view('admin.stok-masuk.edit', compact('stokmasuk'));
     }
 
     /**
@@ -102,15 +104,17 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'nama_barang' => 'required',
+			'user_id' => 'required',
+			'barang_id' => 'required',
+			'tgl_beli' => 'required',
 			'jumlah' => 'required'
 		]);
         $requestData = $request->all();
         
-        $barang = Barang::findOrFail($id);
-        $barang->update($requestData);
+        $stokmasuk = StokMasuk::findOrFail($id);
+        $stokmasuk->update($requestData);
 
-        return redirect('admin/barang')->with('flash_message', 'Barang updated!');
+        return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk updated!');
     }
 
     /**
@@ -122,8 +126,8 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        Barang::destroy($id);
+        StokMasuk::destroy($id);
 
-        return redirect('admin/barang')->with('flash_message', 'Barang deleted!');
+        return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk deleted!');
     }
 }

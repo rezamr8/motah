@@ -25,7 +25,7 @@ class Transaksi extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'order_id', 'barang_id', 'jumlah'];
+    protected $fillable = ['user_id', 'order_id', 'barang_id', 'jumlah','harga'];
 
     public function order()
     {

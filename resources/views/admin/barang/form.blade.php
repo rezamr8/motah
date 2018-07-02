@@ -16,12 +16,6 @@
         {!! Form::text('satuan', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
         {!! $errors->first('satuan', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('harga') ? 'has-error' : ''}}">
-    {!! Form::label('harga', 'Harga', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::number('harga', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-        {!! $errors->first('harga', '<p class="help-block">:message</p>') !!}
-    </div>
 </div>
 
 <div class="form-group">

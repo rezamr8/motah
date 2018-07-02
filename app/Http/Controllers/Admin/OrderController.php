@@ -11,6 +11,7 @@ use App\Barang;
 use App\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\Datatables\Datatables;
 
 class OrderController extends Controller
 {
@@ -51,31 +52,54 @@ class OrderController extends Controller
 
     public function orderTransaksi(Request $request, $id)
     {
-        //dd(Auth::user()->id);
-       // dd($request->all());
+        $barang_id = $request['barang_id'];
+        $jumlah = $request['jumlah'];
+        $harga = $request['harga'];
 
-        // Find Order id
-        $order = Order::find($id);
+        // cek bahan apakah sudah di input, lihat dari table transaksi
         $count = count($request['barang_id']);
-        for($i = 0; $i < $count; $i++)
+        $order = Order::find($id);
+        
+        if($barang_id[0] == null)
         {
+            return redirect()->back()->with('flash_message','Pilih Barang Terlebih Dahulu');
+        }else{
+            for($i = 0; $i < $count; $i++)
+            {
+                foreach($barang_id as $bi){
+                    $transaksi = Transaksi::where('order_id', $id)->where('barang_id', $bi)->get();
+                    
+                    if($transaksi->isEmpty() == true)
+                    {
+                    
+                            $order->transaksi()->create([
+                                'barang_id'=>$barang_id[$i],
+                                'jumlah'=>$jumlah[$i],
+                                'harga' => $harga[$i]
+                                ]);
+                            //Pengurangan Stok
+                            $b = Barang::find($barang_id[$i]);
+                            $hasil = ($b->jumlah) - $jumlah[$i];
+                            $b->jumlah = $hasil; 
+                            $b->save();
+
+                            //Pengurangan Modal di masukan ke dalam field sisa table order
+                        return redirect()->back()->with('flash_message','Bahan Sudah di Tambahkan Ke dalam Order');
+                    }else{
+                        return redirect()->back()->with('flash_message','Bahan Sudah Ada');
+                    }
+                }
+            }
             
-            $barang_id = $request['barang_id'];
-            $jumlah = $request['jumlah'];
-             //save to relation has many
-            $order->transaksi()->create([
-                'barang_id'=>$barang_id[$i],
-                'jumlah'=>$jumlah[$i]
-                ]);
         }
        
-        return redirect()->back()->with('flash_message','Bahan Telah Di tambahkan Ke Dalama Order');
         
+       
     }
 
     public static function orderNumber()
     {
-        // Get the last created order
+       
         $lastOrder = \App\Order::orderBy('created_at', 'desc')->first();
 
         if ( ! $lastOrder )
@@ -83,9 +107,6 @@ class OrderController extends Controller
             $number = 0;
         else 
             $number = substr($lastOrder->id, 0);
-           // echo $number;
-
-        
      
         return sprintf('%04d', intval($number) + 1);
     }
@@ -99,15 +120,9 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // "jenis_order_id" => "3"
-        // "jumlah" => "3"
-        // "tgl_beres" => "2018/06/24"
-        // "user_id" => "1"
-        //dd($request->all());
+       
         $ordernumber = OrderController::orderNumber();
-        //dd($ordernumber);
-
-        //dd($request['jenis_order_id']);
+       
         $jo = $request['jenis_order_id'];
         $no_order = substr(JenisOrder::find($jo)->nama_order,0,3).date('Ymd').$ordernumber;
 
@@ -115,17 +130,19 @@ class OrderController extends Controller
 			'jenis_order_id' => 'required',
 			'jumlah' => 'required',
 			'tgl_beres' => 'required',
-			'user_id' => 'required'
+            'user_id' => 'required',
+            'modal' => 'required'
 		]);
         $requestData = array(
             'jenis_order_id' => $request['jenis_order_id'],
             'jumlah' => $request['jumlah'],
             'tgl_beres' => $request['tgl_beres'],
             'user_id' => $request['user_id'],
-            'no_order' => $no_order
+            'no_order' => $no_order,
+            'modal' => $request['modal']
         );
 
-        //dd($requestData);
+       
         
         Order::create($requestData);
 
@@ -171,10 +188,10 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'jenis_order_id' => 'required',
+			
 			'jumlah' => 'required',
-			'tgl_beres' => 'required',
-			'user_id' => 'required'
+			
+			
 		]);
         $requestData = $request->all();
         
@@ -193,8 +210,39 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        Order::destroy($id);
-
+        $o = Order::find($id);
+        $o->transaksi()->delete();
+        $o->delete();
         return redirect('admin/order')->with('flash_message', 'Order deleted!');
+    }
+
+    public function hapusOrderBarang($idOrder,$idBarang)
+    {
+        $transaksi = Transaksi::where('order_id',$idOrder)->where('barang_id',$idBarang)->first();
+        $j = $transaksi->jumlah;
+        $b = Barang::find($idBarang);
+        $h = ($b->jumlah) + $j;
+        $b->jumlah = $h;
+        $b->save();
+        $transaksi->delete();  
+        return redirect()->back()->with('flash_message', 'Bahan Di delete!');
+        
+    }
+
+    public function getMasterData()
+    {
+        $order = Order::with('jenisorder')->select();
+        return Datatables::of($order)
+            ->addColumn('details_url', function($user) {
+                return url('admin/order/datadetail/' . $user->id);
+            })
+            ->addColumn('action', 'layouts.action')
+            ->make(true);
+    }
+    public function getDetailsData($id)
+    {
+        $order = \App\Order::find($id)->transaksi()->with('barang');
+
+        return Datatables::of($order)->make(true);
     }
 }
