@@ -13,16 +13,7 @@
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        <!-- {!! Form::open(['method' => 'GET', 'url' => '/admin/order', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                            <span class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        {!! Form::close() !!} -->
+                       
 
                         <br/>
                         <br/>
@@ -33,30 +24,7 @@
                                         <th>#</th><th>Jenis Order</th><th>NO ORDER</th><th>JUMLAH</th><th>Tgl SELESAI</th><th>MODAL</th><th>SISA</th><th>Actions</th>
                                     </tr>
                                 </thead>
-                                <!-- <tbody>
-                                @foreach($order as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ strtoupper($item->jenisorder->nama_order) }}</td><td>{{ strtoupper($item->no_order) }}</td><td>{{ $item->jumlah }}</td><td>{{ $item->tgl_beres }}</td>
-                                        <td>
-                                            <a href="{{ url('/admin/order/' . $item->id) }}" title="View Order"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/admin/order/' . $item->id . '/edit') }}" title="Edit Order"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/admin/order', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-sm',
-                                                        'title' => 'Delete Order',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody> -->
+                                
                             </table>
                             <div class="pagination-wrapper"> {!! $order->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
@@ -75,7 +43,7 @@ $(function() {
     var table = $('#order-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: 'order/data',
+        ajax: '{{route("order.data")}}',
         columns: [
         	{
                 "className":      'details-control',
@@ -85,7 +53,6 @@ $(function() {
                 "defaultContent": ''
             },
             { data: 'id', name: 'id' },
-            // { data: 'jenisorder.nama_order', name:'jenisorder.nama_order'},
             { data: 'no_order', name: 'no_order'},
             { data: 'jumlah', name: 'jumlah'},
             { data: 'tgl_beres', name: 'tgl_beres'},
@@ -135,10 +102,10 @@ $(function() {
             serverSide: true,
             ajax: data.details_url,
             columns: [
-                { data: 'id', name: 'id' },
+               
                 { data: 'barang.nama_barang', name:'barang_id'},
-                { data: 'jumlah', name: 'jumlah'}
-                
+                { data: 'jumlah', name: 'jumlah'},
+                { data: 'harga', name: 'harga'}
             ]
         })
     }
@@ -151,9 +118,10 @@ $(function() {
         <table class="table details-table" id="orders-@{{id}}">
             <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>BARANG</th>
                 <th>JUMLAH</th>
+                <th>HARGA</th>
                 
             </tr>
             </thead>

@@ -1,5 +1,5 @@
 <div class="col-md-3">
-    
+@if(Auth::check() && Auth::user()->hasRole('admin')) {
     <div class="card">
         <div class="card-header">
             User Menu
@@ -27,6 +27,12 @@
         </div>
     </div>
     <br/>
+   
+@endif
+
+    
+    
+
     <div class="card">
         <div class="card-header">Module</div>
     
@@ -53,11 +59,7 @@
                     Order
                     </a>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="/admin/stok-keluar">
-                    Stok Keluar
-                    </a>
-                </li>
+               
                 <li class="nav-item" role="presentation">
                     <a class="nav-link" href="/admin/transaksi">
                     Transaksi

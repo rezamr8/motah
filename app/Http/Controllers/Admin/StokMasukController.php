@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\StokMasuk;
+use App\Barang;
+use App\Order;
 use Illuminate\Http\Request;
 
 class StokMasukController extends Controller
@@ -40,7 +42,9 @@ class StokMasukController extends Controller
      */
     public function create()
     {
-        return view('admin.stok-masuk.create');
+        $barang = Barang::pluck('nama_barang','id')->toArray();
+        $order = Order::pluck('no_order','id')->toArray();
+        return view('admin.stok-masuk.create', compact('barang','order'));
     }
 
     /**
@@ -52,16 +56,26 @@ class StokMasukController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->validate($request, [
-			'user_id' => 'required',
+			
 			'barang_id' => 'required',
 			'tgl_beli' => 'required',
-			'jumlah' => 'required'
+            'jumlah' => 'required',
+            'order_id' => 'required'
 		]);
         $requestData = $request->all();
         
+        
+        if(0 == $request['barang_id'])
+        {
+            return redirect()->back()->with('flash_message', 'silahkan isi nama barang');
+        }
         StokMasuk::create($requestData);
-
+        $b = Barang::find($request['barang_id']);
+        $h = ($b->jumlah) + $request['jumlah'];
+        $b->jumlah = $h;
+        $b->save();
         return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk added!');
     }
 
@@ -104,7 +118,7 @@ class StokMasukController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'user_id' => 'required',
+			
 			'barang_id' => 'required',
 			'tgl_beli' => 'required',
 			'jumlah' => 'required'

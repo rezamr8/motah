@@ -18,6 +18,7 @@
     <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> -->
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
 </head>
 <body>
     <div id="app">
@@ -93,6 +94,7 @@
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <!-- <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script> -->
+    <script src="{{ asset('js/select2.min.js') }}"></script>
     
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>

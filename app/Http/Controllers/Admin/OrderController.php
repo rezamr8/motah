@@ -52,6 +52,14 @@ class OrderController extends Controller
 
     public function orderTransaksi(Request $request, $id)
     {
+        // dd(Auth::user()->name);
+        // if(!Auth::check())
+        // {
+        //     return 'anda belum login';
+        // }
+
+        $user = Auth::id();
+        //dd($user);
         $barang_id = $request['barang_id'];
         $jumlah = $request['jumlah'];
         $harga = $request['harga'];
@@ -75,7 +83,8 @@ class OrderController extends Controller
                             $order->transaksi()->create([
                                 'barang_id'=>$barang_id[$i],
                                 'jumlah'=>$jumlah[$i],
-                                'harga' => $harga[$i]
+                                'harga' => $harga[$i],
+                                'user_id'=> $user
                                 ]);
                             //Pengurangan Stok
                             $b = Barang::find($barang_id[$i]);
@@ -84,6 +93,13 @@ class OrderController extends Controller
                             $b->save();
 
                             //Pengurangan Modal di masukan ke dalam field sisa table order
+                            $sisa = ($order->sisa) - $harga[$i];
+                            $order->sisa = $sisa;
+                            $order->save();
+
+                            //associate order belong to user
+                            
+
                         return redirect()->back()->with('flash_message','Bahan Sudah di Tambahkan Ke dalam Order');
                     }else{
                         return redirect()->back()->with('flash_message','Bahan Sudah Ada');
@@ -120,7 +136,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-       
+        $user = Auth::id();
         $ordernumber = OrderController::orderNumber();
        
         $jo = $request['jenis_order_id'];
@@ -130,16 +146,17 @@ class OrderController extends Controller
 			'jenis_order_id' => 'required',
 			'jumlah' => 'required',
 			'tgl_beres' => 'required',
-            'user_id' => 'required',
+            
             'modal' => 'required'
 		]);
         $requestData = array(
             'jenis_order_id' => $request['jenis_order_id'],
             'jumlah' => $request['jumlah'],
             'tgl_beres' => $request['tgl_beres'],
-            'user_id' => $request['user_id'],
+            'user_id' => $user,
             'no_order' => $no_order,
-            'modal' => $request['modal']
+            'modal' => $request['modal'],
+            'sisa' => $request['modal']
         );
 
        
@@ -224,6 +241,11 @@ class OrderController extends Controller
         $h = ($b->jumlah) + $j;
         $b->jumlah = $h;
         $b->save();
+
+        $o = Order::find($idOrder);
+        $harga = $transaksi->harga;
+        $o->sisa = ($o->sisa) + $harga;
+        $o->save();
         $transaksi->delete();  
         return redirect()->back()->with('flash_message', 'Bahan Di delete!');
         

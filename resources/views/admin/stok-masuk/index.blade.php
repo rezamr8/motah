@@ -30,14 +30,20 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>User Id</th><th>Barang Id</th><th>Tgl Beli</th><th>Actions</th>
+                                        <th>#</th><th>No Order</th><th>Barang</th><th>Tgl Beli</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($stokmasuk as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->user_id }}</td><td>{{ $item->barang_id }}</td><td>{{ $item->tgl_beli }}</td>
+                                        @if(empty($item->order->no_order))
+                                        <td>BELI TANPA ORDER</td>
+                                        @else
+                                        <td>{{ $item->order->no_order }}</td>
+                                        @endif
+                                        
+                                        <td>{{ $item->barang->nama_barang }}</td><td>{{ $item->tgl_beli }}</td>
                                         <td>
                                             <a href="{{ url('/admin/stok-masuk/' . $item->id) }}" title="View Stok Masuk"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/admin/stok-masuk/' . $item->id . '/edit') }}" title="Edit Stok Masuk"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

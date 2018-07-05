@@ -42,6 +42,8 @@
             format: 'yyyy/mm/dd',
             todayHighlight: true
         });
+
+        $('#barang_id').select2();
     });
         
 </script>
