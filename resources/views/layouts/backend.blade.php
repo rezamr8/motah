@@ -77,6 +77,15 @@
                 </div>
             @endif
 
+            @if (Session::has('flash_message_info'))
+                <div class="container">
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ Session::get('flash_message_info') }}
+                    </div>
+                </div>
+            @endif
+
             @yield('content')
         </main>
 
@@ -98,7 +107,7 @@
     
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
-
+    <script src="{{ asset('js/autoNumeric.js') }}"></script>
     
 
    

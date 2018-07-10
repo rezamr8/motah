@@ -6,27 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use App\DataTables\UsersDataTable;
+
 
 class UsersController extends Controller
 {
+    
+   
     /**
      * Display a listing of the resource.
      *
      * @return void
      */
-    public function index(Request $request)
+    public function index(UsersDataTable $dataTable)
     {
-        $keyword = $request->get('search');
-        $perPage = 15;
+        // $keyword = $request->get('search');
+        // $perPage = 15;
 
-        if (!empty($keyword)) {
-            $users = User::where('name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")
-                ->paginate($perPage);
-        } else {
-            $users = User::paginate($perPage);
-        }
+        // if (!empty($keyword)) {
+        //     $users = User::where('name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")
+        //         ->paginate($perPage);
+        // } else {
+        //     $users = User::paginate($perPage);
+        // }
 
-        return view('admin.users.index', compact('users'));
+        // return view('admin.users.index', compact('users'));
+        return $dataTable->render('admin.users.index');
+        
     }
 
     /**

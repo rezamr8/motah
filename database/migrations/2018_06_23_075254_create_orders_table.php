@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('no_order')->nullable();
             $table->double('modal')->nullable();
             $table->double('sisa')->nullable();
+            $table->boolean('status')->default(0);
             });
     }
 

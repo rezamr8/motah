@@ -1,5 +1,5 @@
 <div class="col-md-3">
-@if(Auth::check() && Auth::user()->hasRole('admin')) {
+@if(Auth::check() && Auth::user()->hasRole('admin')) 
     <div class="card">
         <div class="card-header">
             User Menu
@@ -40,6 +40,11 @@
         <div class="card-body">
             <ul class="nav flex-column" role="tablist">
                 <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="/admin">
+                    Dashboard
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" href="/admin/jenis-order">
                     Jenis Order
                     </a>
@@ -55,16 +60,44 @@
                     </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="/admin/order">
-                    Order
-                    </a>
+                    <a class="nav-link" href="#">Order</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <ul>
+                        <li>
+                            <a class="nav-link" href="/admin/order/selesai">
+                            Order Selesai
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/admin/order">
+                            Order On Process
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" href="#">Report</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <ul>
+                        <li>
+                            <a class="nav-link" href="/admin/order/selesai">
+                            Stok Masuk
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/admin/order">
+                            Stok Keluar
+                            </a>
+                        </li>
+                    </ul>
+                    
                 </li>
                
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" href="/admin/transaksi">
-                    Transaksi
-                    </a>
-                </li>
+               
             </ul>
         </div>
     </div>

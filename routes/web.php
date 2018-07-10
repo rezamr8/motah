@@ -1,15 +1,18 @@
 <?php
 
 
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::get('admin', 'Admin\AdminController@index');
+
+ Route::get('admin', 'Admin\AdminController@index');
 
 
  
@@ -20,14 +23,19 @@ Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], fun
     //datatable
     Route::get('admin/order/data',['uses'=>'Admin\OrderController@getMasterData', 'as' => 'order.data']);
     Route::get('admin/order/datadetail/{id}',['uses'=>'Admin\OrderController@getDetailsData', 'as' => 'order.detail']);
+    Route::get('admin/order/data/selesai',['uses'=>'Admin\OrderController@orderSelesai', 'as' => 'order.data.selesai']);
+    Route::get('admin/order/excel', 'Admin\OrderController@laporanexcel');
+    Route::get('admin/order/selesai', ['uses' => 'Admin\OrderController@getOrderSelesai', 'as' => 'get.order.selesai']);
     Route::resource('admin/order', 'Admin\\OrderController');
     Route::post('admin/order/{id}/transaksi', ['uses' => 'Admin\OrderController@orderTransaksi', 'as' => 'order.transaksi']);
     Route::delete('admin/order/{idOrder}/transaksi/{idBarang}', ['uses' => 'Admin\OrderController@hapusOrderBarang', 'as' => 'order.hapusbarang']);
-
+    Route::get('admin/order/selesai/{id}', ['uses' => 'Admin\OrderController@selesai', 'as' => 'order.selesai']);
+    
 
     Route::resource('admin/jenis-order', 'Admin\\JenisOrderController');
-    Route::resource('admin/transaksi', 'Admin\\TransaksiController');
+    // Route::resource('admin/transaksi', 'Admin\\TransaksiController');
     Route::resource('admin/stok-masuk', 'Admin\\StokMasukController');
+    
 });
 
 

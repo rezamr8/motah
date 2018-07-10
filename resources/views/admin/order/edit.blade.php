@@ -35,13 +35,20 @@
                                     <tr>
                                         <th>ID</th><td>{{ $order->id }}</td>
                                     </tr>
-                                    <tr><th> Jenis Order </th><td> {{ $order->no_order }} </td></tr><tr><th> Jumlah </th><td> <div class="form-group {{ $errors->has('jumlah') ? 'has-error' : ''}}">
-   
-    <div class="col-md-6">
+                                    <tr><th> Jenis Order </th><td> {{ $order->no_order }} </td></tr><tr><th> Jumlah </th>
+                                    <td> 
+                                   
         {!! Form::number('jumlah', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
         {!! $errors->first('jumlah', '<p class="help-block">:message</p>') !!}
-    </div>
-</div> </td></tr><tr><th> Tgl Beres </th><td> {{ $order->tgl_beres }} </td></tr>
+     </td>
+</tr>
+<tr><th>MODAL</th><td>
+
+ {!! Form::text('modal', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+ {!! $errors->first('modal', '<p class="help-block">:message</p>') !!}
+
+</td></tr>
+<tr><th> Tgl Beres </th><td> {{ $order->tgl_beres }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -59,4 +66,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
 @endsection

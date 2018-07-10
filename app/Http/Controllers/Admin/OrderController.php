@@ -12,32 +12,41 @@ use App\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
+use Excel;
+use App\Exports\OrderReport;
+use App\DataTables\OrdersDataTable;
+
 
 class OrderController extends Controller
 {
+
+    public function index(OrdersDataTable $dataTable)
+    {
+        return $dataTable->render('admin.order.index');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
-    {
-        $keyword = $request->get('search');
-        $perPage = 25;
+    // public function index(Request $request)
+    // {
+    //     $keyword = $request->get('search');
+    //     $perPage = 25;
 
-        if (!empty($keyword)) {
-            $order = Order::where('jenis_order_id', 'LIKE', "%$keyword%")
-                ->orWhere('jumlah', 'LIKE', "%$keyword%")
-                ->orWhere('tgl_beres', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->paginate($perPage);
-        } else {
-            $order = Order::paginate($perPage);
-        }
+    //     if (!empty($keyword)) {
+    //         $order = Order::where('jenis_order_id', 'LIKE', "%$keyword%")
+    //             ->orWhere('jumlah', 'LIKE', "%$keyword%")
+    //             ->orWhere('tgl_beres', 'LIKE', "%$keyword%")
+    //             ->orWhere('user_id', 'LIKE', "%$keyword%")
+    //             ->paginate($perPage);
+    //     } else {
+    //         $order = Order::paginate($perPage);
+    //     }
 
         
-        return view('admin.order.index', compact('order'));
-    }
+    //     return view('admin.order.index', compact('order'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -136,11 +145,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+       
+        // dd($request->all());
         $user = Auth::id();
         $ordernumber = OrderController::orderNumber();
        
         $jo = $request['jenis_order_id'];
         $no_order = substr(JenisOrder::find($jo)->nama_order,0,3).date('Ymd').$ordernumber;
+        $modal = intval(preg_replace('/[^0-9]/', '', $request['modal']));
 
         $this->validate($request, [
 			'jenis_order_id' => 'required',
@@ -155,8 +167,9 @@ class OrderController extends Controller
             'tgl_beres' => $request['tgl_beres'],
             'user_id' => $user,
             'no_order' => $no_order,
-            'modal' => $request['modal'],
-            'sisa' => $request['modal']
+            'modal' => $modal,
+            'sisa' => $modal,
+            'status' => 0
         );
 
        
@@ -177,6 +190,15 @@ class OrderController extends Controller
     {
         $barang = Barang::pluck('nama_barang', 'id');
         $order = Order::with('transaksi')->find($id);
+        if ($order->status == 1)
+        {
+            if(Auth::check() && Auth::user()->hasRole('admin')) {
+                return view('admin.order.show', compact('order','barang'));
+            } else {
+                return redirect('admin/order')->with('flash_message_info','ORDER SUDAH SELESAI Anda tidak bisa mengEDIT');
+            }
+            
+        }
         return view('admin.order.show', compact('order','barang'));
     }
 
@@ -204,13 +226,19 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->all());
+        $modal = intval(preg_replace('/[^0-9]/', '', $request['modal']));
         $this->validate($request, [
 			
 			'jumlah' => 'required',
 			
 			
 		]);
-        $requestData = $request->all();
+        $requestData = [
+            'jumlah' => $request['jumlah'],
+            'modal' => $modal,
+            'sisa' => $modal
+        ];
         
         $order = Order::findOrFail($id);
         $order->update($requestData);
@@ -253,12 +281,13 @@ class OrderController extends Controller
 
     public function getMasterData()
     {
-        $order = Order::with('jenisorder')->select();
+        $order = Order::with('jenisorder')->where('status',0)->select();
         return Datatables::of($order)
             ->addColumn('details_url', function($user) {
                 return url('admin/order/datadetail/' . $user->id);
             })
             ->addColumn('action', 'layouts.action')
+            
             ->make(true);
     }
     public function getDetailsData($id)
@@ -267,4 +296,42 @@ class OrderController extends Controller
 
         return Datatables::of($order)->make(true);
     }
+
+    public function selesai($id)
+    {
+        $o = Order::find($id);
+        $o->status = 1;
+        $o->save();
+        return redirect()->back()->with('flash_message_info', 'Order Sudah Selesai');
+    }
+
+    public function orderSelesai()
+    {
+        $order = Order::with('jenisorder')->where('status',1)->select();
+        return Datatables::of($order)
+            ->addColumn('details_url', function($user) {
+                return url('admin/order/datadetail/' . $user->id);
+            })
+            // ->addColumn('action', 'layouts.action')
+            ->addColumn('action', function($order){
+                if($order->status == 1)
+                {
+                    return '<span class="btn btn-xs btn-success"><i class="fa fa-money"></i>Selesai</span>';
+                }
+                return $order->status;
+            })
+            ->make(true);
+    }
+
+    public function getOrderSelesai()
+    {
+      
+        return view('admin.order.selesai');
+    }
+
+    public function laporanExcel()
+    {
+        return Excel::download(new OrderReport, 'Order.xlsx');
+    }
+
 }

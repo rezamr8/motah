@@ -25,7 +25,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['jenis_order_id', 'jumlah', 'tgl_beres', 'user_id','no_order','modal','sisa'];
+    protected $fillable = ['jenis_order_id', 'jumlah', 'tgl_beres', 'user_id','no_order','modal','sisa','status'];
 
     public function barang()
     {

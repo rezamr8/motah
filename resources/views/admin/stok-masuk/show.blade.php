@@ -7,14 +7,14 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Stok Masuk {{ $stok masuk->id }}</div>
+                    <div class="card-header">Stok Masuk {{ $stokmasuk->id }}</div>
                     <div class="card-body">
 
                         <a href="{{ url('/admin/stok-masuk') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/admin/stok-masuk/' . $stok masuk->id . '/edit') }}" title="Edit Stok Masuk"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/admin/stok-masuk/' . $stokmasuk->id . '/edit') }}" title="Edit Stok Masuk"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['admin/stok masuk', $stok masuk->id],
+                            'url' => ['admin/stok-masuk', $stokmasuk->id],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
@@ -31,9 +31,9 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>ID</th><td>{{ $stok masuk->id }}</td>
+                                        <th>ID</th><td>{{ $stokmasuk->id }}</td>
                                     </tr>
-                                    <tr><th> User Id </th><td> {{ $stok masuk->user_id }} </td></tr><tr><th> Barang Id </th><td> {{ $stok masuk->barang_id }} </td></tr><tr><th> Tgl Beli </th><td> {{ $stok masuk->tgl_beli }} </td></tr>
+                                    <tr><th> User Id </th><td> {{ $stokmasuk->user_id }} </td></tr><tr><th> Barang Id </th><td> {{ $stokmasuk->barang_id }} </td></tr><tr><th> Tgl Beli </th><td> {{ $stokmasuk->tgl_beli }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

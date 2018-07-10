@@ -1,1 +1,2 @@
 <a href="/admin/order/{{$id}}" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i> Tambah</a>
+<a href="/admin/order/selesai/{{$id}}" class="btn btn-sm btn-info"><i class="fa fa-pencil-square-o"></i> Selesai</a>

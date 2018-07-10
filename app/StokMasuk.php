@@ -37,4 +37,8 @@ class StokMasuk extends Model
        return $this->belongsTo('App\Barang');
     }
     
+    public function user()
+    {
+       return $this->belongsTo('App\User');
+    }
 }

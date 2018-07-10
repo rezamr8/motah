@@ -37,6 +37,14 @@
 
 <script type="text/javascript">
     $(function (){
+
+        anElement = new AutoNumeric('#modal',{
+           
+            caretPositionOnFocus: "start",
+            currencySymbol: "Rp ",
+            decimalPlaces: 0
+            });
+   
         $('#tgl_beres').datepicker({
             format: 'yyyy/mm/dd',
             todayHighlight: true

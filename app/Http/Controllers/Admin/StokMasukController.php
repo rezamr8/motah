@@ -9,6 +9,7 @@ use App\StokMasuk;
 use App\Barang;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StokMasukController extends Controller
 {
@@ -71,7 +72,9 @@ class StokMasukController extends Controller
         {
             return redirect()->back()->with('flash_message', 'silahkan isi nama barang');
         }
-        StokMasuk::create($requestData);
+        $sm = StokMasuk::create($requestData);
+        $sm->user()->associate(Auth::id());
+        $sm->save();
         $b = Barang::find($request['barang_id']);
         $h = ($b->jumlah) + $request['jumlah'];
         $b->jumlah = $h;
