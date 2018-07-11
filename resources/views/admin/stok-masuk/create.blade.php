@@ -42,8 +42,14 @@
             format: 'yyyy/mm/dd',
             todayHighlight: true
         });
-
+        anElement = new AutoNumeric('#harga',{
+           
+           caretPositionOnFocus: "start",
+           currencySymbol: "Rp ",
+           decimalPlaces: 0
+           });
         $('#barang_id').select2();
+        $('#order_id').select2();
     });
         
 </script>

@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Edit Stok Masuk #{{ $stok masuk->id }}</div>
+                    <div class="card-header">Edit Stok Masuk #{{ $stokmasuk->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/admin/stok-masuk') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -21,9 +21,9 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($stok masuk, [
+                        {!! Form::model($stokmasuk, [
                             'method' => 'PATCH',
-                            'url' => ['/admin/stok-masuk', $stok masuk->id],
+                            'url' => ['/admin/stok-masuk', $stokmasuk->id],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}

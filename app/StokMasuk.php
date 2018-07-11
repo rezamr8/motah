@@ -25,7 +25,7 @@ class StokMasuk extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'barang_id', 'tgl_beli', 'jumlah','order_id'];
+    protected $fillable = ['user_id', 'barang_id', 'tgl_beli', 'jumlah','order_id','harga'];
 
     public function order()
     {

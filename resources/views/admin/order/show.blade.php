@@ -7,7 +7,7 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Order {{ $order->id }}</div>
+                    <div class="card-header">Order {{ $order->no_order }}</div>
                     <div class="card-body">
 
                         <a href="{{ url('/admin/order') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -30,15 +30,43 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $order->id }}</td>
-                                    </tr>
+                                    
                                     <tr><th> Jenis Order </th><td> {{ $order->no_order }} </td></tr><tr><th> Jumlah </th><td> {{ $order->jumlah }} </td></tr><tr><th> Tgl Beres </th><td> {{ $order->tgl_beres }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
                         </br>
+                        <!-- Pembelian Barang -->
+                        <div class="card ">
+                        
+                            <div class="table-responsive">
+                            <div class="card-header"><h4 class="text-center">PEMBELIAN BARANG</h4> </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Barang</th>
+                                            <th>Jumlah</th>
+                                            <th>harga</th>
+                                        </tr>
+                                        @foreach($order->stokmasuk as $data)
+                                        <tr>
+                                            <td>{{$data->barang->nama_barang}}</td>
+                                            <td>{{$data->jumlah}}</td>
+                                            <td>{{$data->harga}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- end Pembelian Barang -->
+                        </br>
                         <!-- Detail Order -->
+                        <div class="card">
+                            <div class="card-header"><h4 class="text-center">JUMLAH BAHAN YANG DI PAKAI</h4></div>
+                            <div class="card-body">
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
@@ -70,13 +98,16 @@
                                     
                                 </tbody>
                             </table>
+                        </div>
+                        </div>                     
                         <!-- End Detail Order -->
-
+                                            </br>
                         {!! Form::open(['route' => ['order.transaksi', $order->id], 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                        
+                        <div class="card">
                         <div class="form-group table-fields">
-                                <h4 class="text-center">Add Barang</h4><br>
+                                <div class="card-header"><h4 class="text-center">Add Barang</h4> </div>
+                                <div class="card-body">
                                 <div class="entry col-md-10  form-inline">
                                     <table class="table">
                                         <tbody>
@@ -95,8 +126,7 @@
                                                 </td>
                                                 <th>{!! Form::label('jumlah', 'JUMLAH') !!}</th>
                                                 <td>{!! Form::text('jumlah[]', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}</td>
-                                                <th>{!! Form::label('harga', 'HARGA') !!}</th>
-                                                <td>{!! Form::text('harga[]', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}</td>
+                                                
                                                 <td> 
                                                     <!-- <button class="btn btn-success btn-add inline btn-sm" type="button">
                                                         <span class="fa fa-plus"></span>
@@ -107,11 +137,12 @@
                                     </table>
              
                                 </div>
+                                </div>
                         </div>
-
+                                                            
                         <button class="btn btn-primary" type="submit">SAVE</button>
                         {!! Form::close() !!}
-
+                                                        </div>
                     </div>
                 </div>
             </div>

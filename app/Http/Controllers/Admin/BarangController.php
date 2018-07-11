@@ -52,11 +52,16 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
 			'nama_barang' => 'required',
-			'jumlah' => 'required'
+			'satuan' => 'required'
 		]);
-        $requestData = $request->all();
+        $requestData = [
+            'nama_barang' => $request['nama_barang'],
+            'satuan'=> $request['satuan'],
+            'jumlah'=> 0
+        ];
         
         Barang::create($requestData);
 

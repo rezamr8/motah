@@ -15,6 +15,7 @@ use Yajra\Datatables\Datatables;
 use Excel;
 use App\Exports\OrderReport;
 use App\DataTables\OrdersDataTable;
+use App\DataTables\OrdersSelesaiDataTable;
 
 
 class OrderController extends Controller
@@ -71,7 +72,7 @@ class OrderController extends Controller
         //dd($user);
         $barang_id = $request['barang_id'];
         $jumlah = $request['jumlah'];
-        $harga = $request['harga'];
+        // $harga = $request['harga'];
 
         // cek bahan apakah sudah di input, lihat dari table transaksi
         $count = count($request['barang_id']);
@@ -92,7 +93,7 @@ class OrderController extends Controller
                             $order->transaksi()->create([
                                 'barang_id'=>$barang_id[$i],
                                 'jumlah'=>$jumlah[$i],
-                                'harga' => $harga[$i],
+                                // 'harga' => $harga[$i],
                                 'user_id'=> $user
                                 ]);
                             //Pengurangan Stok
@@ -102,9 +103,9 @@ class OrderController extends Controller
                             $b->save();
 
                             //Pengurangan Modal di masukan ke dalam field sisa table order
-                            $sisa = ($order->sisa) - $harga[$i];
-                            $order->sisa = $sisa;
-                            $order->save();
+                            // $sisa = ($order->sisa) - $harga[$i];
+                            // $order->sisa = $sisa;
+                            // $order->save();
 
                             //associate order belong to user
                             
@@ -202,6 +203,12 @@ class OrderController extends Controller
         return view('admin.order.show', compact('order','barang'));
     }
 
+    public function orderDetail($id)
+    {
+        $order = Order::find($id);
+        return view('admin.order.detail',compact('order'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -270,10 +277,10 @@ class OrderController extends Controller
         $b->jumlah = $h;
         $b->save();
 
-        $o = Order::find($idOrder);
-        $harga = $transaksi->harga;
-        $o->sisa = ($o->sisa) + $harga;
-        $o->save();
+        // $o = Order::find($idOrder);
+        // $harga = $transaksi->harga;
+        // $o->sisa = ($o->sisa) + $harga;
+        // $o->save();
         $transaksi->delete();  
         return redirect()->back()->with('flash_message', 'Bahan Di delete!');
         
@@ -323,10 +330,10 @@ class OrderController extends Controller
             ->make(true);
     }
 
-    public function getOrderSelesai()
+    public function getOrderSelesai(OrdersSelesaiDataTable $dataTable)
     {
-      
-        return view('admin.order.selesai');
+        return $dataTable->render('admin.order.selesai');
+        // return view('admin.order.selesai');
     }
 
     public function laporanExcel()

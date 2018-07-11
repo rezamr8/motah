@@ -30,7 +30,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>No Order</th><th>Barang</th><th>Tgl Beli</th><th>Actions</th>
+                                        <th>#</th><th>No Order</th><th>Barang</th><th>Tgl Beli</th><th>Jumlah</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,10 +43,8 @@
                                         <td>{{ $item->order->no_order }}</td>
                                         @endif
                                         
-                                        <td>{{ $item->barang->nama_barang }}</td><td>{{ $item->tgl_beli }}</td>
+                                        <td>{{ $item->barang->nama_barang }}</td><td>{{ $item->tgl_beli }}</td><td>{{ $item->jumlah }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/stok-masuk/' . $item->id) }}" title="View Stok Masuk"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/admin/stok-masuk/' . $item->id . '/edit') }}" title="Edit Stok Masuk"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
                                                 'url' => ['/admin/stok-masuk', $item->id],

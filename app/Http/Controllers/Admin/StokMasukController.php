@@ -44,7 +44,7 @@ class StokMasukController extends Controller
     public function create()
     {
         $barang = Barang::pluck('nama_barang','id')->toArray();
-        $order = Order::pluck('no_order','id')->toArray();
+        $order = Order::where('status',0)->pluck('no_order','id')->toArray();
         return view('admin.stok-masuk.create', compact('barang','order'));
     }
 
@@ -63,22 +63,40 @@ class StokMasukController extends Controller
 			'barang_id' => 'required',
 			'tgl_beli' => 'required',
             'jumlah' => 'required',
-            'order_id' => 'required'
-		]);
-        $requestData = $request->all();
+            'order_id' => 'required',
+            'harga' => 'required'
+        ]);
+        $harga = intval(preg_replace('/[^0-9]/', '', $request['harga']));
+        $requestData = [
+            'barang_id' => $request['barang_id'],
+			'tgl_beli' => $request['tgl_beli'],
+            'jumlah' => $request['jumlah'],
+            'order_id' => $request['order_id'],
+            'harga' => $harga
+        ];
+        
         
         
         if(0 == $request['barang_id'])
         {
             return redirect()->back()->with('flash_message', 'silahkan isi nama barang');
         }
+        // pembelian stok barang
         $sm = StokMasuk::create($requestData);
         $sm->user()->associate(Auth::id());
         $sm->save();
+
+        // penambahan stok barang
         $b = Barang::find($request['barang_id']);
         $h = ($b->jumlah) + $request['jumlah'];
         $b->jumlah = $h;
         $b->save();
+
+        // pengurangan modal
+        $order = Order::find($request['order_id']);
+        $kurang = ($order->sisa) - $harga; 
+        $order->sisa = $kurang;
+        $order->save();
         return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk added!');
     }
 

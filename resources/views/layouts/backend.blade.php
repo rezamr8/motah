@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    <style>
+        .table-borderless td,
+        .table-borderless th {
+            border: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -68,24 +75,7 @@
         </nav>
 
         <main class="py-4">
-            @if (Session::has('flash_message'))
-                <div class="container">
-                    <div class="alert alert-success">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ Session::get('flash_message') }}
-                    </div>
-                </div>
-            @endif
-
-            @if (Session::has('flash_message_info'))
-                <div class="container">
-                    <div class="alert alert-danger">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ Session::get('flash_message_info') }}
-                    </div>
-                </div>
-            @endif
-
+          
             @yield('content')
         </main>
 
@@ -100,7 +90,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script> -->
+   
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <!-- <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script> -->
     <script src="{{ asset('js/select2.min.js') }}"></script>
@@ -108,7 +100,7 @@
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/autoNumeric.js') }}"></script>
-    
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
 
    
 
@@ -118,7 +110,21 @@
             $('ul.navbar-nav a[href="{{ "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" }}"]').closest('li').addClass('active');
         });
     </script>
+    <script>
+        @if (Session::has('flash_message'))
+            toastr.options.positionClass= "toast-top-full-width";
+            toastr.success("{{ Session::get('flash_message') }}")
+                   
+            @endif
+
+            @if (Session::has('flash_message_info'))
+            toastr.options.positionClass= "toast-top-full-width";
+            toastr.info("{{ Session::get('flash_message_info') }}")
+                
+            @endif
+    </script>
 
     @yield('scripts')
+    
 </body>
 </html>

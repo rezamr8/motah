@@ -6,7 +6,7 @@
         @include('admin.sidebar')
         <div class="col-md-9">
             <div class="card">
-            <div class="card-header">ON PROGRESS ORDER</div>
+            <div class="card-header">ORDER SELESAI</div>
               <div class="card-body">
                 {!! $dataTable->table() !!}
               </div>
