@@ -16,12 +16,20 @@ class UsersTableSeeder extends Seeder
             'name' => 'admin',
             'label' => 'Administrator',            
         ]);
-
-        DB::table('users')->insert([
-            'name'=>'Reza Mohamad Ramdan',
-            'email'=>'edzapodka@gmail.com',
-            'password'=> bcrypt('gue123'),
-        ]);
+        
+        $data = [
+            [
+                'name'=>'Administrator',
+                'email'=>'admin@motahkarya.com',
+                'password'=> bcrypt('rahasia'),
+            ],
+            [
+                'name'=>'Staff',
+                'email'=>'staff@motahkarya.com',
+                'password'=> bcrypt('rahasia'),
+            ]
+            ];
+        DB::table('users')->insert($data);
 
         DB::table('role_user')->insert([
             'role_id' => 1,

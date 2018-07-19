@@ -24,8 +24,8 @@ class StokMasukDataTable extends DataTable
             ->editColumn('jumlah', function($n){
                 return $n->jumlah;
             })
-            ->rawColumns(['order.no_order'])
-            ->addColumn('action', 'stokmasuk.action');
+            ->rawColumns(['order.no_order','action'])
+            ->addColumn('action', 'admin.actions.stokmasuk');
     }
 
     /**

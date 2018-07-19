@@ -10,7 +10,7 @@
                 <div class="card-header">Report Keluar</div>
                 <div class="card-body">
                 
-                {!! Form::open(['method' => 'post', 'url' => '/admin/report/gettanggal', 'role' => 'search'])  !!}
+                {!! Form::open(['method' => 'get', 'url' => '/admin/report/export/xls', 'role' => 'search'])  !!}
                     <div class="form-group">
                       <label for="tgl_awal">Tanggal</label>
                       <input type="text" name="tgl_awal" id="tgl_awal" class="form-control" placeholder="Masukan Tanggal" aria-describedby="tgl_awalID">
@@ -22,8 +22,8 @@
                       <small id="tgl_akhirID" class="text-muted">Masukan Akhir Tanggal</small>
                     </div>
 
-                    <button class="btn btn-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
+                    <button class="btn btn-success" type="submit">
+                                    <i class="fa fa-file-excel-o"></i>
                                 </button>
 
                     <input type="button" value="FILTER" name="filter" id="filter" class="btn  btn-primary">
@@ -34,8 +34,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    bayar
-                    
+                    Report Filter
                 </div>
                 <div class="card-body">
                     <div id="orderFilter">
@@ -85,7 +84,7 @@
             
 
             }else{
-            alert('isi dahulu tanggal nya');
+            swal('Upss','isi dahulu tanggal nya','error');
             }
         })
         

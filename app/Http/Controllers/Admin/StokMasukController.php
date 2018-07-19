@@ -175,6 +175,6 @@ class StokMasukController extends Controller
     {
         StokMasuk::destroy($id);
 
-        return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk deleted!');
+        //return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk deleted!');
     }
 }

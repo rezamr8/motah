@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], fun
 
     Route::resource('admin/report-transaksi', 'Admin\\ReportController');
     Route::post('admin/report/gettanggal',['uses'=>'Admin\ReportController@getTanggal','as'=>'report.tanggal']);
+    Route::get('admin/report/export/{type}', 'Admin\ReportController@exportOrder');
     
 });
 
