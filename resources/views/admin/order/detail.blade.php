@@ -1,6 +1,6 @@
 
 <!-- Pembelian Barang -->
-<div class="card ">
+<div class="card mb-2">
                         
                         <div class="table-responsive">
                         <div class="card-header">
@@ -10,6 +10,10 @@
                                     <tr>
                                         <th>no order </th>
                                         <td>{{$order->no_order}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jenis Order </th>
+                                        <td>{{$order->jenisorder->jenis}}</td>
                                     </tr>
                                     
                                     <tr>
@@ -38,9 +42,9 @@
                                     </tr>
                                     @foreach($order->stokmasuk as $data)
                                     <tr>
-                                        <td>{{$data->barang->nama_barang}}</td>
+                                        <td>{{$data->barang()->withTrashed()->get()->first()->nama_barang}}</td>
                                         <td>{{$data->jumlah}}</td>
-                                        <td id="harga">{{$data->harga}}</td>
+                                        <td class="harga" data-a-sign="Rp ">Rp {{ number_format($data->harga) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -49,3 +53,29 @@
                         </div>
                     </div>
                     <!-- end Pembelian Barang -->
+
+                    <!-- Bahan Yang Di pakai -->
+                    <div class="card">
+                    <div class="card-header">BaHan Yang Terpakai</div>
+                    
+                    <div class="card-body">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Barang</th>
+                                        <th>Jumlah</th>
+                                        
+                                    </tr>
+                                    @foreach($order->transaksi as $data)
+                                    <tr>
+                                        <td>{{$data->barang()->withTrashed()->get()->first()->nama_barang}}</td>
+                                        <td>{{$data->jumlah}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- End Bahan Yang Di pakai -->

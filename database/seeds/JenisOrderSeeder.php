@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BarangSeeder extends Seeder
+class JenisOrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class BarangSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Barang::class,10)->create();
+        factory(App\JenisOrder::class,5)->create();
     }
 }

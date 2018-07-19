@@ -17,7 +17,9 @@ class CreateBarangsTable extends Migration
             $table->timestamps();
             $table->string('nama_barang')->nullable();
             $table->integer('jumlah')->nullable();
+            $table->double('harga')->nullable();
             $table->string('satuan')->nullable();
+            $table->softDeletes();
            
             });
     }

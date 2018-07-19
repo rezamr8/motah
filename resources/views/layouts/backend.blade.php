@@ -101,6 +101,7 @@
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/autoNumeric.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
    
 
@@ -112,16 +113,20 @@
     </script>
     <script>
         @if (Session::has('flash_message'))
-            toastr.options.positionClass= "toast-top-full-width";
-            toastr.success("{{ Session::get('flash_message') }}")
-                   
+            // toastr.options.positionClass= "toast-top-full-width";
+            // toastr.success("{{ Session::get('flash_message') }}")
+            swal("Sukses","{{ Session::get('flash_message') }}","success")
             @endif
 
-            @if (Session::has('flash_message_info'))
-            toastr.options.positionClass= "toast-top-full-width";
-            toastr.info("{{ Session::get('flash_message_info') }}")
-                
-            @endif
+        @if (Session::has('flash_message_info'))
+            // toastr.options.positionClass= "toast-top-full-width";
+            // toastr.info("{{ Session::get('flash_message_info') }}")
+            swal("","{{ Session::get('flash_message_info') }}", "info") 
+        @endif
+
+        @if (Session::has('flash_message_danger'))
+            swal("Upss","{{ Session::get('flash_message_danger') }}", "error") 
+        @endif
     </script>
 
     @yield('scripts')

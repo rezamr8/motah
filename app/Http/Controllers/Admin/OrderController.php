@@ -56,7 +56,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $jo = JenisOrder::pluck('nama_order','id');
+        $jo = JenisOrder::get(['nama_order','jenis','id'])->pluck('full_jenis','id')->toArray();
         return view('admin.order.create')->with('jo',$jo);
     }
 
@@ -112,7 +112,7 @@ class OrderController extends Controller
 
                         return redirect()->back()->with('flash_message','Bahan Sudah di Tambahkan Ke dalam Order');
                     }else{
-                        return redirect()->back()->with('flash_message','Bahan Sudah Ada');
+                        return redirect()->back()->with('flash_message_danger','Bahan Sudah Ada');
                     }
                 }
             }
@@ -153,6 +153,7 @@ class OrderController extends Controller
        
         $jo = $request['jenis_order_id'];
         $no_order = substr(JenisOrder::find($jo)->nama_order,0,3).date('Ymd').$ordernumber;
+        
         $modal = intval(preg_replace('/[^0-9]/', '', $request['modal']));
 
         $this->validate($request, [
@@ -167,7 +168,7 @@ class OrderController extends Controller
             'jumlah' => $request['jumlah'],
             'tgl_beres' => $request['tgl_beres'],
             'user_id' => $user,
-            'no_order' => $no_order,
+            'no_order' => strtoupper($no_order),
             'modal' => $modal,
             'sisa' => $modal,
             'status' => 0
@@ -240,14 +241,19 @@ class OrderController extends Controller
 			'jumlah' => 'required',
 			
 			
-		]);
+        ]);
+        
+        $order = Order::findOrFail($id);
+        //hitung selisih
+        $hasil = $modal - ($order->modal);
+        $sisa = ($order->sisa) + $hasil;
         $requestData = [
             'jumlah' => $request['jumlah'],
             'modal' => $modal,
-            'sisa' => $modal
+            'sisa' => $sisa
         ];
         
-        $order = Order::findOrFail($id);
+        
         $order->update($requestData);
 
         return redirect('admin/order')->with('flash_message', 'Order updated!');
@@ -272,7 +278,7 @@ class OrderController extends Controller
     {
         $transaksi = Transaksi::where('order_id',$idOrder)->where('barang_id',$idBarang)->first();
         $j = $transaksi->jumlah;
-        $b = Barang::find($idBarang);
+        $b = Barang::withTrashed()->find($idBarang);
         $h = ($b->jumlah) + $j;
         $b->jumlah = $h;
         $b->save();

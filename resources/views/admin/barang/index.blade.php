@@ -40,6 +40,7 @@
                                         <td>{{ $item->nama_barang }}</td><td>{{ $item->jumlah }}</td><td>{{ $item->satuan }}</td>
                                         <td>
                                             <a href="{{ url('/admin/barang/' . $item->id) }}" title="View Barang"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            @if(Auth::check() && Auth::user()->hasRole('admin')) 
                                             <a href="{{ url('/admin/barang/' . $item->id . '/edit') }}" title="Edit Barang"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
@@ -53,6 +54,7 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

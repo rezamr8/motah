@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('roles')->insert([
-            'name' => 'Administrator',
-            'label' => 'admin',            
+            'name' => 'admin',
+            'label' => 'Administrator',            
         ]);
 
         DB::table('users')->insert([

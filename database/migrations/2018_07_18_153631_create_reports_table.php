@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateStokKeluarsTable extends Migration
+class CreateReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +13,10 @@ class CreateStokKeluarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stok_keluars', function (Blueprint $table) {
+        Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('barang_id')->nullable();
-            $table->integer('jumlah')->nullable();
-            });
+        });
     }
 
     /**
@@ -27,6 +26,6 @@ class CreateStokKeluarsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('stok_keluars');
+        Schema::dropIfExists('reports');
     }
 }

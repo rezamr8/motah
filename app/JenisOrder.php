@@ -25,7 +25,12 @@ class JenisOrder extends Model
      *
      * @var array
      */
-    protected $fillable = ['nama_order'];
+    protected $fillable = ['nama_order','jenis'];
+
+    public function getFullJenisAttribute()
+    {
+        return $this->nama_order . ' ' . $this->jenis;
+    }
 
     public function orders()
     {

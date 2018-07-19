@@ -1,9 +1,6 @@
 <?php
 
 
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -12,12 +9,8 @@ Auth::routes();
 
 
 
- Route::get('admin', 'Admin\AdminController@index');
-
-
- 
-
 Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], function () {
+    Route::get('admin', 'Admin\AdminController@index');
     Route::resource('admin/barang', 'Admin\\BarangController');
     // Route::resource('admin/stok-keluar', 'Admin\\StokKeluarController');
     //datatable
@@ -39,6 +32,9 @@ Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], fun
     Route::resource('admin/jenis-order', 'Admin\\JenisOrderController');
     // Route::resource('admin/transaksi', 'Admin\\TransaksiController');
     Route::resource('admin/stok-masuk', 'Admin\\StokMasukController')->except(['edit']);
+
+    Route::resource('admin/report-transaksi', 'Admin\\ReportController');
+    Route::post('admin/report/gettanggal',['uses'=>'Admin\ReportController@getTanggal','as'=>'report.tanggal']);
     
 });
 

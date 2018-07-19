@@ -30,7 +30,7 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Nama Order</th><th>Actions</th>
+                                        <th>#</th><th>Nama Order</th><th>Jenis Order</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,6 +38,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
                                         <td>{{ $item->nama_order }}</td>
+                                        <td>{{ $item->jenis}}</td>
                                         <td>
                                             <a href="{{ url('/admin/jenis-order/' . $item->id) }}" title="View JenisOrder"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/admin/jenis-order/' . $item->id . '/edit') }}" title="Edit JenisOrder"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

@@ -5,7 +5,7 @@ namespace App\DataTables;
 use App\User;
 use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class BarangDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -16,7 +16,7 @@ class UsersDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->addColumn('action', 'users.action');
+            ->addColumn('action', 'barang.action');
     }
 
     /**
@@ -25,12 +25,9 @@ class UsersDataTable extends DataTable
      * @param \App\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query()
+    public function query(User $model)
     {
-        // return $model->query()->select('id', 'name', 'email', 'created_at', 'updated_at');
-        $query = User::query();
-
-        return $this->applyScopes($query);
+        return $model->newQuery()->select('id', 'name','email', 'created_at', 'updated_at');
     }
 
     /**
@@ -70,6 +67,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Users_' . date('YmdHis');
+        return 'Barang_' . date('YmdHis');
     }
 }

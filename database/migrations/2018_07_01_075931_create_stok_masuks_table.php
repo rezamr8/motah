@@ -17,8 +17,10 @@ class CreateStokMasuksTable extends Migration
             $table->timestamps();
             $table->integer('user_id')->nullable();
             $table->integer('barang_id')->nullable();
+            $table->integer('order_id')->nullable();
             $table->date('tgl_beli')->nullable();
             $table->integer('jumlah')->nullable();
+            $table->double('harga')->nullable();
             });
     }
 

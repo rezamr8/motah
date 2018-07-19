@@ -16,6 +16,7 @@ class CreateJenisOrdersTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('nama_order')->nullable();
+            $table->string('jenis')->nullable();
             });
     }
 

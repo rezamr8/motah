@@ -7,13 +7,13 @@
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Stokkeluar</div>
+                    <div class="card-header">Stok Masuk</div>
                     <div class="card-body">
-                        <a href="{{ url('/admin/stok-keluar/create') }}" class="btn btn-success btn-sm" title="Add New StokKeluar">
+                        <a href="{{ url('/admin/stok-masuk/create') }}" class="btn btn-success btn-sm" title="Add New Stok Masuk">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
-                        {!! Form::open(['method' => 'GET', 'url' => '/admin/stok-keluar', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                        {!! Form::open(['method' => 'GET', 'url' => '/admin/stok-masuk', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                         <div class="input-group">
                             <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                             <span class="input-group-append">
@@ -30,26 +30,30 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Barang</th><th>Jumlah</th><th>Actions</th>
+                                        <th>#</th><th>No Order</th><th>Barang</th><th>Tgl Beli</th><th>Jumlah</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($stokkeluar as $item)
+                                @foreach($stokmasuk as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->barang->nama_barang }}</td><td>{{ $item->jumlah }}</td>
+                                        @if(empty($item->order->no_order))
+                                        <td>BELI TANPA ORDER</td>
+                                        @else
+                                        <td>{{ $item->order->no_order }}</td>
+                                        @endif
+                                        
+                                        <td>{{ $item->barang->nama_barang }}</td><td>{{ $item->tgl_beli }}</td><td>{{ $item->jumlah }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/stok-keluar/' . $item->id) }}" title="View StokKeluar"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/admin/stok-keluar/' . $item->id . '/edit') }}" title="Edit StokKeluar"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
-                                                'url' => ['/admin/stok-keluar', $item->id],
+                                                'url' => ['/admin/stok-masuk', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-sm',
-                                                        'title' => 'Delete StokKeluar',
+                                                        'title' => 'Delete Stok Masuk',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
@@ -58,7 +62,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $stokkeluar->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="pagination-wrapper"> {!! $stokmasuk->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                     </div>

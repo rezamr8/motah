@@ -16,7 +16,7 @@ class OrdersDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->addColumn('action', 'layouts.action');
+            ->addColumn('action', 'admin.actions.order');
     }
 
     

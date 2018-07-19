@@ -51,7 +51,7 @@
                                         </tr>
                                         @foreach($order->stokmasuk as $data)
                                         <tr>
-                                            <td>{{$data->barang->nama_barang}}</td>
+                                            <td>{{$data->barang()->withTrashed()->nama_barang}}</td>
                                             <td>{{$data->jumlah}}</td>
                                             <td>{{$data->harga}}</td>
                                         </tr>
@@ -76,7 +76,7 @@
                                     </tr>
                                     @foreach($order->transaksi as $o)
                                     <tr>
-                                        <td>{{$o->barang->nama_barang}}</td>
+                                        <td>{{$o->barang()->withTrashed()->get()->first()->nama_barang}}</td>
                                         <td>{{$o->jumlah}}</td>
                                         <td>
                                         {!! Form::open([

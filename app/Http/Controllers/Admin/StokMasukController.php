@@ -10,31 +10,39 @@ use App\Barang;
 use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\DataTables\StokMasukDataTable;
+use Yajra\Datatables\Datatables;
 
 class StokMasukController extends Controller
 {
+
+    public function index(StokMasukDataTable $dataTable)
+    {
+        return $dataTable->render('admin.stok-masuk.index');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
-    {
-        $keyword = $request->get('search');
-        $perPage = 25;
+    // public function index(Request $request)
+    // {
+    //     $keyword = $request->get('search');
+    //     $perPage = 25;
 
-        if (!empty($keyword)) {
-            $stokmasuk = StokMasuk::where('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('barang_id', 'LIKE', "%$keyword%")
-                ->orWhere('tgl_beli', 'LIKE', "%$keyword%")
-                ->orWhere('jumlah', 'LIKE', "%$keyword%")
-                ->paginate($perPage);
-        } else {
-            $stokmasuk = StokMasuk::paginate($perPage);
-        }
+    //     if (!empty($keyword)) {
+    //         $stokmasuk = StokMasuk::where('user_id', 'LIKE', "%$keyword%")
+    //             ->orWhere('barang_id', 'LIKE', "%$keyword%")
+    //             ->orWhere('tgl_beli', 'LIKE', "%$keyword%")
+    //             ->orWhere('jumlah', 'LIKE', "%$keyword%")
+    //             ->paginate($perPage);
+    //     } else {
+    //         $stokmasuk = StokMasuk::paginate($perPage);
+    //     }
 
-        return view('admin.stok-masuk.index', compact('stokmasuk'));
-    }
+    //     return view('admin.stok-masuk.index', compact('stokmasuk'));
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -92,7 +100,11 @@ class StokMasukController extends Controller
         $b->jumlah = $h;
         $b->save();
 
-        // pengurangan modal
+        if($request['order_id'] === null || $request['order_id'] === "0")
+        {
+            return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk added Null!');
+        }
+        //pengurangan modal
         $order = Order::find($request['order_id']);
         $kurang = ($order->sisa) - $harga; 
         $order->sisa = $kurang;

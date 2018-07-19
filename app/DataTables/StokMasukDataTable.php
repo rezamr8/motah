@@ -16,6 +16,15 @@ class StokMasukDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
+            ->editColumn('order.no_order', function ($n) {
+                if ($n->order_id == 0) return "<p style='color: #FFFFFF;background-color:#0000ff;text-align: center;'>TANPA ORDER</p>";
+                //return 'order.no_order';
+               return $n->order->no_order;
+            })
+            ->editColumn('jumlah', function($n){
+                return $n->jumlah;
+            })
+            ->rawColumns(['order.no_order'])
             ->addColumn('action', 'stokmasuk.action');
     }
 
@@ -27,7 +36,8 @@ class StokMasukDataTable extends DataTable
      */
     public function query()
     {
-        return $model->newQuery()->select('id', 'add-your-columns-here', 'created_at', 'updated_at');
+        $query = StokMasuk::with(['order', 'barang']);
+        return $this->applyScopes($query);
     }
 
     /**
@@ -52,11 +62,20 @@ class StokMasukDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
-            'add your columns',
-            'created_at',
-            'updated_at'
+            //bisa pake cara di comment
+            //'order.no_order' => ['name' => 'order','data' => 'order.no_order'],
+            'id' =>['visible' => false],
+            'No Order' => ['data' => 'order.no_order'],
+            'Nama Barang' => ['data' => 'barang.nama_barang'],
+            'jumlahxsm' => ['name' => 'jumlah', 'data' => 'jumlah'],
+            'harga' => ['data' => 'harga',"render" => " $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data)"]
+            
         ];
+    }
+
+    protected function noorder()
+    {
+        
     }
 
     /**

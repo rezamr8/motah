@@ -50,7 +50,8 @@ class JenisOrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-			'nama_order' => 'required'
+            'nama_order' => 'required',
+            'jenis' => 'required'
 		]);
         $requestData = $request->all();
         
@@ -98,7 +99,8 @@ class JenisOrderController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-			'nama_order' => 'required'
+            'nama_order' => 'required',
+            'jenis' => 'required'
 		]);
         $requestData = $request->all();
         

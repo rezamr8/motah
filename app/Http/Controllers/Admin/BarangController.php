@@ -54,13 +54,14 @@ class BarangController extends Controller
     {
         
         $this->validate($request, [
-			'nama_barang' => 'required',
+            'nama_barang' => 'required',
+            'jumlah' => 'required',
 			'satuan' => 'required'
 		]);
         $requestData = [
             'nama_barang' => $request['nama_barang'],
             'satuan'=> $request['satuan'],
-            'jumlah'=> 0
+            'jumlah'=> $request['jumlah']
         ];
         
         Barang::create($requestData);

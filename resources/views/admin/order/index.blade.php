@@ -53,7 +53,7 @@
         var id = $(e.relatedTarget).data('target-id');
         $.get('/admin/order/detail/' + id, function( data ) {
            $(".modal-body").html(data);
-           anElement = new AutoNumeric.multiple(['#modal', '#sisa', '#harga'],{
+           anElement = new AutoNumeric.multiple(['#modal', '#sisa'],{
            caretPositionOnFocus: "start",
            currencySymbol: "Rp ",
            decimalPlaces: 0
