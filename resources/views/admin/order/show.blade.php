@@ -51,9 +51,9 @@
                                         </tr>
                                         @foreach($order->stokmasuk as $data)
                                         <tr>
-                                            <td>{{$data->barang()->withTrashed()->nama_barang}}</td>
+                                            <td>{{$data->barang()->withTrashed()->get()->first()->nama_barang}}</td>
                                             <td>{{$data->jumlah}}</td>
-                                            <td>{{$data->harga}}</td>
+                                            <td>Rp {{ number_format($data->harga) }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -114,7 +114,7 @@
                                             <tr>
                                                 <th>{!! Form::label('barang', 'BARANG') !!}</th>
                                                 <td>
-                                                    <!-- {!! Form::select('barang_id', $barang, null, ['class' => 'form-control']) !!} -->
+                                                  
                                                     {!!
                                                         Form::select(
                                                             'barang_id[]', 
@@ -128,9 +128,7 @@
                                                 <td>{!! Form::text('jumlah[]', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}</td>
                                                 
                                                 <td> 
-                                                    <!-- <button class="btn btn-success btn-add inline btn-sm" type="button">
-                                                        <span class="fa fa-plus"></span>
-                                                    </button> -->
+                                                   
                                             </td>
                                             </tr>
                                         </tbody>

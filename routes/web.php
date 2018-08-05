@@ -12,6 +12,11 @@ Auth::routes();
 Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], function () {
     Route::get('admin', 'Admin\AdminController@index');
     Route::resource('admin/barang', 'Admin\\BarangController');
+    Route::resource('admin/estimasi', 'Admin\\EstimasiController');
+    Route::delete('admin/order/{idOrder}/estimasi/{idBarang}', ['uses' => 'Admin\EstimasiController@hapusEstimasiBarang', 'as' => 'estimasi.hapusbarang']);
+    Route::get('admin/report/{estimasi}', ['uses' => 'Admin\EstimasiController@reportPdf', 'as' => 'estimasi.reportpdf'] );
+    //Route::post('admin/report', ['uses' => 'Admin\EstimasiController@reportPdf', 'as' => 'estimasi.reportpdf'] );
+
     // Route::resource('admin/stok-keluar', 'Admin\\StokKeluarController');
     //datatable
     Route::get('admin/order/data',['uses'=>'Admin\OrderController@getMasterData', 'as' => 'order.data']);
@@ -23,6 +28,7 @@ Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], fun
 
     Route::resource('admin/order', 'Admin\\OrderController');
     Route::post('admin/order/{id}/transaksi', ['uses' => 'Admin\OrderController@orderTransaksi', 'as' => 'order.transaksi']);
+    Route::post('admin/order/{id}/estimasi', ['uses' => 'Admin\EstimasiController@orderEstimasi', 'as' => 'order.estimasi']);
     Route::get('admin/order/detail/{id}',['uses' => 'Admin\OrderController@orderDetail', 'as' => 'order.detail']);
     
     Route::delete('admin/order/{idOrder}/transaksi/{idBarang}', ['uses' => 'Admin\OrderController@hapusOrderBarang', 'as' => 'order.hapusbarang']);
@@ -52,3 +58,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','roles'], 'roles'=>'a
    
     
  });
+

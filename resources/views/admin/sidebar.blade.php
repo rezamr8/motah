@@ -102,11 +102,12 @@
                             Report Transaksi
                             </a>
                         </li>
-                        <!-- <li>
-                            <a class="nav-link" href="/admin/order">
-                            Stok Keluar
+                        <li>
+                            <a class="nav-link" href="/admin/estimasi">
+                            <i class="fa fa-edit fa-lg text-info"></i>
+                            Estimasi
                             </a>
-                        </li> -->
+                        </li>
                     </ul>
                     
                 </li>

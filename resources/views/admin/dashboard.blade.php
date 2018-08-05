@@ -16,7 +16,7 @@
 
                 </br>
                 <div class="card text-white bg-primary">
-                    <div class="card-header">TOTAL MODAL </div>
+                    <div class="card-header">TOTAL MODAL Bulan {{  strtoupper(date('F')) }}</div>
 
                     <div class="card-body">
                     <h2 class="text-center" id="totalmodal">{{ $total_modal }}</h2>
@@ -35,7 +35,7 @@
                 </div>
                 </br>
                 <div class="card text-white bg-success">
-                    <div class="card-header">SISA MODAL </div>
+                    <div class="card-header">SISA MODAL Bulan {{  strtoupper(date('F')) }}</div>
 
                     <div class="card-body">
                        <h2 class="text-center" id="sisamodal">{{ $sisa_modal }}</h2>

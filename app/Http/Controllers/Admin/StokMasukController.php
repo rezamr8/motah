@@ -173,6 +173,11 @@ class StokMasukController extends Controller
      */
     public function destroy($id)
     {
+        // $stokmasuk = StokMasuk::find($id);
+        // $smid = $stokmasuk->order_id;
+        
+        // $order = Order::find($smid);
+        // $sisa = $order->sisa;
         StokMasuk::destroy($id);
 
         //return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk deleted!');

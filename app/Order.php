@@ -49,6 +49,11 @@ class Order extends Model
         return $this->hasMany('App\Transaksi');
     }
 
+    public function estimasi()
+    {
+        return $this->hasMany('App\Estimasi');
+    }
+
     public function stokmasuk()
     {
         return $this->hasMany('App\StokMasuk');
