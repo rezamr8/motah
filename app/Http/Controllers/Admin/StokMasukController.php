@@ -22,29 +22,6 @@ class StokMasukController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    // public function index(Request $request)
-    // {
-    //     $keyword = $request->get('search');
-    //     $perPage = 25;
-
-    //     if (!empty($keyword)) {
-    //         $stokmasuk = StokMasuk::where('user_id', 'LIKE', "%$keyword%")
-    //             ->orWhere('barang_id', 'LIKE', "%$keyword%")
-    //             ->orWhere('tgl_beli', 'LIKE', "%$keyword%")
-    //             ->orWhere('jumlah', 'LIKE', "%$keyword%")
-    //             ->paginate($perPage);
-    //     } else {
-    //         $stokmasuk = StokMasuk::paginate($perPage);
-    //     }
-
-    //     return view('admin.stok-masuk.index', compact('stokmasuk'));
-    // }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\View\View
@@ -173,11 +150,23 @@ class StokMasukController extends Controller
      */
     public function destroy($id)
     {
-        // $stokmasuk = StokMasuk::find($id);
-        // $smid = $stokmasuk->order_id;
+        $stokmasuk = StokMasuk::find($id);
+        $smid = $stokmasuk->order_id;
+        $bid = $stokmasuk->barang_id;
+        $harga = $stokmasuk->harga;
+        $jumlah = $stokmasuk->jumlah;
+
         
-        // $order = Order::find($smid);
-        // $sisa = $order->sisa;
+        $order = Order::find($smid);
+        $sisa = ($order->sisa) + $harga;
+        $order->sisa = $sisa;
+        $order->save();
+
+        $barang = Barang::find($bid);
+        $tambah = ($barang->jumlah) - $jumlah;
+        $barang->jumlah = $tambah;
+        $barang->save();
+
         StokMasuk::destroy($id);
 
         //return redirect('admin/stok-masuk')->with('flash_message', 'StokMasuk deleted!');

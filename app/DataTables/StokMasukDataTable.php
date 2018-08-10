@@ -18,14 +18,17 @@ class StokMasukDataTable extends DataTable
         return datatables($query)
             ->editColumn('order.no_order', function ($n) {
                 if ($n->order_id == 0) return "<p style='color: #FFFFFF;background-color:#0000ff;text-align: center;'>TANPA ORDER</p>";
-                //return 'order.no_order';
-               return $n->order->no_order;
+                return $n->order->no_order;
             })
             ->editColumn('jumlah', function($n){
                 return $n->jumlah;
             })
-            ->rawColumns(['order.no_order','action'])
-            ->addColumn('action', 'admin.actions.stokmasuk');
+            ->editColumn('action', function ($n) {
+                if (empty($n->order->status)) return view('admin.actions.stokmasuk',compact('n'));
+                return 'Order Beres';
+            })
+            ->rawColumns(['order.no_order','action']);
+            //->addColumn('action', 'admin.actions.stokmasuk');
     }
 
     /**
@@ -64,11 +67,11 @@ class StokMasukDataTable extends DataTable
         return [
             //bisa pake cara di comment
             //'order.no_order' => ['name' => 'order','data' => 'order.no_order'],
-            'id' =>['visible' => false],
+            'id' =>['name' =>'id', 'visible' => false],
             'No Order' => ['data' => 'order.no_order'],
             'Nama Barang' => ['data' => 'barang.nama_barang'],
-            'jumlahxsm' => ['name' => 'jumlah', 'data' => 'jumlah'],
-            'harga' => ['data' => 'harga',"render" => " $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data)"]
+            'Jumlah' => ['name' => 'jumlah', 'data' => 'jumlah'],
+            'Harga' => ['data' => 'harga',"render" => " $.fn.dataTable.render.number(',', '.', 0, 'Rp ').display(data)"]
             
         ];
     }

@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth','roles'], 'roles'=>['staff','admin']], fun
     Route::get('admin/order/data/selesai',['uses'=>'Admin\OrderController@orderSelesai', 'as' => 'order.data.selesai']);
     Route::get('admin/order/excel', 'Admin\OrderController@laporanexcel');
     Route::get('admin/order/selesai', ['uses' => 'Admin\OrderController@getOrderSelesai', 'as' => 'get.order.selesai']);
-
+    Route::get('admin/order/harga', ['uses' => 'Admin\OrderController@ajaxHarga', 'as' => 'get.harga']);
 
     Route::resource('admin/order', 'Admin\\OrderController');
     Route::post('admin/order/{id}/transaksi', ['uses' => 'Admin\OrderController@orderTransaksi', 'as' => 'order.transaksi']);

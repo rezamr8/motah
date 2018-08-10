@@ -347,4 +347,10 @@ class OrderController extends Controller
         return Excel::download(new OrderReport, 'Order.xlsx');
     }
 
+    public function ajaxHarga(Request $request)
+    {
+       return Barang::find($request->id);
+       
+    }
+
 }

@@ -61,7 +61,8 @@ class BarangController extends Controller
         $requestData = [
             'nama_barang' => $request['nama_barang'],
             'satuan'=> $request['satuan'],
-            'jumlah'=> $request['jumlah']
+            'jumlah'=> $request['jumlah'],
+            'harga' => $request['harga']
         ];
         
         Barang::create($requestData);
@@ -109,7 +110,8 @@ class BarangController extends Controller
     {
         $this->validate($request, [
 			'nama_barang' => 'required',
-			'jumlah' => 'required'
+            'jumlah' => 'required',
+            'harga' => 'required'
 		]);
         $requestData = $request->all();
         
