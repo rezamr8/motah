@@ -112,7 +112,7 @@
                                     <table class="table">
                                         <tbody>
                                             <tr>
-                                                <th>{!! Form::label('barang', 'BARANG') !!}</th>
+                                                <th>{!! Form::label('barang', 'BARANG', ['class' => 'control-label']) !!}</th>
                                                 <td>
                                                   
                                                     {!!
@@ -120,7 +120,7 @@
                                                             'barang_id[]', 
                                                             $barang, 
                                                             null, 
-                                                            ['class' => 'form-control', 'placeholder' => 'Please Select', 'value' => 0])
+                                                            ['class' => 'form-control barang', 'placeholder' => 'Please Select', 'value' => 0])
                                                         !!}
                                                     
                                                 </td>
@@ -150,6 +150,7 @@
 @section('scripts')
     <script type="text/javascript">
         $( document ).ready(function() {
+            $('.barang').select2();
             $(document).on('click', '.btn-add', function(e) {
                 e.preventDefault();
 

@@ -137,6 +137,7 @@
 @section('scripts')
     <script type="text/javascript">
         $( document ).ready(function() {
+            $('.ajaxHarga').select2();
             var totharga = 0;
             $('.jumlah').keyup(function(){
                 var jumlah = $('.jumlah').val();

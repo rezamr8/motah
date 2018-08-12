@@ -37,7 +37,7 @@
                                 @foreach($barang as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->nama_barang }}</td><td>{{ $item->jumlah }}</td><td>{{ $item->harga }}</td><td>{{ $item->satuan }}</td>
+                                        <td>{{ $item->nama_barang }}</td><td>{{ $item->jumlah }}</td><td>Rp {{ number_format($item->harga) }}</td><td>{{ $item->satuan }}</td>
                                         <td>
                                             <a href="{{ url('/admin/barang/' . $item->id) }}" title="View Barang"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             @if(Auth::check() && Auth::user()->hasRole('admin')) 

@@ -62,7 +62,7 @@ class BarangController extends Controller
             'nama_barang' => $request['nama_barang'],
             'satuan'=> $request['satuan'],
             'jumlah'=> $request['jumlah'],
-            'harga' => $request['harga']
+            'harga' => intval(preg_replace('/[^0-9]/', '', $request['harga']))
         ];
         
         Barang::create($requestData);
@@ -111,10 +111,16 @@ class BarangController extends Controller
         $this->validate($request, [
 			'nama_barang' => 'required',
             'jumlah' => 'required',
-            'harga' => 'required'
+            'harga' => 'required',
+            'satuan' => 'required'
 		]);
-        $requestData = $request->all();
-        
+        $requestData = [
+            'nama_barang' => $request->nama_barang,
+            'satuan' => $request->satuan,
+            'jumlah' => $request->jumlah,
+            'harga' => intval(preg_replace('/[^0-9]/', '', $request['harga']))
+        ];
+       
         $barang = Barang::findOrFail($id);
         $barang->update($requestData);
 

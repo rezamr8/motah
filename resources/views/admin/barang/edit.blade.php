@@ -38,3 +38,14 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+<script type="text/javascript">
+anElement = new AutoNumeric.multiple(['#harga'],{
+                        caretPositionOnFocus: "start",
+                        currencySymbol: "Rp ",
+                        decimalCharacterAlternative: ",",
+                        decimalPlaces: 0
+                    });
+</script>
+@endsection

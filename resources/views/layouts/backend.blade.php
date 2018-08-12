@@ -15,10 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
-    <!-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
@@ -99,9 +97,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <!-- <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script> -->
-   
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <!-- <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script> -->
     <script src="{{ asset('js/select2.min.js') }}"></script>
@@ -110,7 +106,8 @@
     <script src="{{ asset('js/handlebars.min.js') }}"></script>
     <script src="{{ asset('js/autoNumeric.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    
 
    
 

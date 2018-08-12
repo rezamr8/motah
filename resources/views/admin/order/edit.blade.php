@@ -42,7 +42,7 @@
         {!! $errors->first('jumlah', '<p class="help-block">:message</p>') !!}
      </td>
 </tr>
-<tr><th>MODAL</th><td>
+<tr><th>{!! Form::label('modal', 'Modal', ['class' => 'control-label']) !!}</th><td>
 
  {!! Form::text('modal', null, ('required' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
  {!! $errors->first('modal', '<p class="help-block">:message</p>') !!}
@@ -55,7 +55,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-4 col-md-4">
-                                {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
+                                {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Update', ['class' => 'btn btn-primary']) !!}
                             </div>
                         </div>
 
@@ -69,5 +69,12 @@
 @endsection
 
 @section('scripts')
-
+<script type="text/javascript">
+anElement = new AutoNumeric.multiple(['#modal'],{
+                        caretPositionOnFocus: "start",
+                        currencySymbol: "Rp ",
+                        decimalCharacterAlternative: ",",
+                        decimalPlaces: 0
+                    });
+</script>
 @endsection
